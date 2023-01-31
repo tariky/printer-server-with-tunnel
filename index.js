@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import ngrok from "ngrok";
 import express from "express";
 import bodyParser from "body-parser";
@@ -19,14 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 	});
 
 	// Update Ulaz robe printer link to generated tunnel url
-	await axios.put(
-		process.env.DEV
-			? `http://localhost:3000/api/settings`
-			: process.env.PRODUCTION_URL,
-		{
-			printer_link: url,
-		}
-	);
+	await axios.put(process.env.PRODUCTION_URL, {
+		printer_link: url,
+	});
 
 	// Check if server is alive
 	app.get("/", (req, res) => {
@@ -42,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 		const stikerData = queryString.stringify({
 			sku: req.body.sku,
 			dobkod: req.body.dobkod,
-			quantity: req.body.quantity,
+			quantity: req.body.qunatity,
 		});
 		const result = await axios.get(
 			`http://localhost:56426/print?${stikerData}`
