@@ -47,6 +47,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 		res.json(result.data);
 	});
 
+	app.post("/qc/print", async (req, res) => {
+		const stikerData = queryString.stringify({
+			sku: req.body.sku,
+			size: req.body.size,
+			quantity: req.body.quantity,
+			name: req.body.name,
+		});
+		console.log(stikerData);
+		// const result = await axios.get(
+		// 	`http://localhost:56426/print?${stikerData}`
+		// );
+		res.json(stikerData);
+	});
+
 	// Use this route to send test stickers
 	app.post("/ulaz/print/test", async (req, res) => {
 		const stikerData = queryString.stringify({
